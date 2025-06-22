@@ -4,6 +4,11 @@
 
 ---
 
+## 📸 Screenshots
+
+### 🧠 Prompt Interface
+![Community page](https://github.com/user-attachments/assets/6cafcb28-a9d4-4bd2-a598-79cf6c8c7319)
+![Generated Images](https://github.com/user-attachments/assets/996d008a-df6d-4356-8b6d-a0319c94ca05)
 ## 🚀 Features
 
 - 💬 Convert text prompts into stunning images using Stability AI
