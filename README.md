@@ -22,8 +22,7 @@
 
 ## 📸 Demo
 
-> Coming soon!  
-_Link your deployed project here once live._
+👉 [Click here to see the live site](https://dalleaiapp.netlify.app/)
 
 ---
 
