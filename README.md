@@ -3,7 +3,7 @@
 **Imagegify** is a full-stack MERN application that transforms your text prompts into AI-generated images using the **Stability AI** API. You can generate, preview, **download**, and store your creations with ease — all hosted via **Cloudinary**.
 
 ---
-
+note:- pls don't generate images as the api limit can exaust. thankyou
 ## 📸 Screenshots
 
 ### 🧠 Prompt Interface
