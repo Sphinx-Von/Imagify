@@ -35,21 +35,6 @@ note:- pls don't generate images as the api limit can exaust. thankyou
 - **Image Hosting:** Cloudinary
 - **File Download:** Client-side `download` utility (via Blob or anchor tag)
 
----
-
-## 📁 Project Structure
-
-aiimagegen/
-├── client/ # React frontend (Vite)
-│ ├── src/
-│ └── public/
-├── server/ # Node/Express backend
-│ ├── routes/
-│ ├── controllers/
-│ └── utils/
-├── .gitignore
-└── README.md
-
 
 ---
 
