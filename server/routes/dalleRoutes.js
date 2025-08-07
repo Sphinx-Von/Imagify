@@ -1,9 +1,9 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
 import axios from 'axios';
+import FormData from 'form-data';
 
 dotenv.config();
-
 const router = express.Router();
 
 // Test route
@@ -16,39 +16,35 @@ router.post('/', async (req, res) => {
   try {
     const { prompt } = req.body;
 
+    // Build form-data
+    const formData = new FormData();
+    formData.append('prompt', prompt);
+    formData.append('output_format', 'png');
+    formData.append('aspect_ratio', '1:1');
+    formData.append('model', 'sd3'); // latest model
+
     const stabilityResponse = await axios.post(
-      'https://api.stability.ai/v1/generation/stable-diffusion-v1-6/text-to-image',
-      {
-        text_prompts: [{ text: prompt }],
-        cfg_scale: 7,
-        height: 512,
-        width: 512,
-        steps: 30,
-      },
+      'https://api.stability.ai/v2beta/stable-image/generate/sd3',
+      formData,
       {
         headers: {
           Authorization: `Bearer ${process.env.STABILITY_API_KEY}`,
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
+          ...formData.getHeaders(),
         },
       }
     );
 
-    const artifact = stabilityResponse.data.artifacts?.[0];
-
-    if (!artifact || !artifact.base64) {
-      return res.status(500).json({ error: 'No image returned by Stability AI.' });
+    const image = stabilityResponse.data.image;
+    if (!image) {
+      return res.status(500).json({ error: 'No image returned from Stability AI.' });
     }
 
-    res.status(200).json({ photo: artifact.base64 });
+    res.status(200).json({ photo: image });
 
   } catch (error) {
     console.error('Stability AI error:', error?.response?.data || error.message);
     res.status(500).json({
-      error:
-        error?.response?.data?.error?.message ||
-        error?.response?.data ||
-        'Image generation failed',
+      error: error?.response?.data || 'Image generation failed',
     });
   }
 });

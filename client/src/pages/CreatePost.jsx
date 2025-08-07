@@ -21,7 +21,7 @@ const CreatePost = () => {
     try {
       setGeneratingImg(true);
 
-      const response = await fetch('https://imagify-4mvl.onrender.com/api/v1/dalle', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/dalle`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -58,32 +58,36 @@ const CreatePost = () => {
 
 
 
-  const handleSubmit = async (e) => {
+ const handleSubmit = async (e) => {
   e.preventDefault();
-  if(form.prompt && form.photo){
+  if (form.prompt && form.photo) {
     setLoading(true);
     try {
-      const response = await fetch('https://imagify-4mvl.onrender.com/api/v1/post',
-        {
-      method: 'POST',
-        headers: {
-       'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form)
-      })
-      await response.json();
-      navigate('/')
-    } catch (error) {
-      alert(error)
-    }
-    finally{
-      setLoading(false)
-    }
-  }else{
-    alert('Please enter a prompt and generate an image')
-  }
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/post`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
 
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || 'Failed to share post');
+      }
+
+      alert('Post shared successfully!');
+      navigate('/');
+    } catch (error) {
+      console.error(error);
+      alert(error.message || 'Something went wrong!');
+    } finally {
+      setLoading(false);
+    }
+  } else {
+    alert('Please enter a prompt and generate an image');
   }
+};
+
 
   const handleChange = (e) => {
   setForm({ ...form, [e.target.name]: e.target.value });

@@ -25,23 +25,34 @@ router.route('/').get(async(req, res) => {
 
 })
 // CREATE A POST
-router.route('/').post(async(req, res) => {
-    try {
-        const {name, prompt, photo} = req.body;
-        const photoUrl = await cloudinary.uploader.upload(photo);
+// CREATE A POST
+router.route('/').post(async (req, res) => {
+  try {
+    const { name, prompt, photo } = req.body;
 
-      const newPost = await Post.create({
-    name,
-    prompt,
-    photo: photoUrl.url,
-})
-res.status(201).json({success: true, data: newPost})
-        
-    } catch (error) {
-     res.status(500).json({success: false, message: error})   
-    }
+    // Upload photo to Cloudinary
+    const photoUrl = await cloudinary.uploader.upload(photo);
 
+    // Save post to MongoDB
+    const newPost = await Post.create({
+      name,
+      prompt,
+      photo: photoUrl.url,
+    });
 
-})
+    return res.status(201).json({
+      success: true,
+      message: 'Post created successfully',
+      data: newPost,
+    });
+  } catch (error) {
+    console.error('Error creating post:', error);
+    return res.status(500).json({
+      success: false,
+      message: error.message || 'Something went wrong while creating post',
+    });
+  }
+});
+
 
 export default router;
