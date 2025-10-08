@@ -22,7 +22,7 @@ note:- pls don't generate images as the api limit can exaust. thankyou
 
 ## 📸 Demo
 
-👉 [Click here to see the live site](https://dalleaiapp.netlify.app/)
+👉 [Click here to see the live site](https://imagify-lfq1.vercel.app/)
 
 ---
 
